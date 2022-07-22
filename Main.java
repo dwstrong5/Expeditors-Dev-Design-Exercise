@@ -14,19 +14,12 @@ public class Main {
     }
 
     private static void getInput() throws FileNotFoundException, IOException{
-        ArrayList<String> list = new ArrayList<String>();
-        String s;
+        ArrayList<Entry> list = new ArrayList<Entry>();
         try (Scanner reader = new Scanner(new File("./input.txt"))) {
             while(reader.hasNextLine()) {
-                // String[] tokens = format(reader.nextLine()).split("\"");
-                // System.out.print(tokens.length + ": ");
-                // for (String i : tokens) {
-                //     System.out.print(i + "--");
-                // }
-                // System.out.print("\n");
-                Entry e = processLine(format(reader.nextLine()));
-                e.printToString();
+                list.add(processLine(format(reader.nextLine())));
             }
+            
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
             System.exit(-1);

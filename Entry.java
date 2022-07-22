@@ -42,6 +42,6 @@ public class Entry {
     }
 
     public void printToString() {
-        System.out.printf("%s - %s - %s - %s - %s - %d\n", first, last, address, city, state, age);
+        System.out.printf("\t%s - %s - %s - %s - %s - %d\n", first, last, address, city, state, age);
     }
 }

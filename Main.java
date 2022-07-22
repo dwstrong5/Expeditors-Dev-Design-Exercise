@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class Main {
@@ -14,12 +15,22 @@ public class Main {
     }
 
     private static void getInput() throws FileNotFoundException, IOException{
-        ArrayList<Entry> list = new ArrayList<Entry>();
+        HashMap<String, ArrayList<Entry>> map = new HashMap<String, ArrayList<Entry>>();
+        Entry e;
         try (Scanner reader = new Scanner(new File("./input.txt"))) {
             while(reader.hasNextLine()) {
-                list.add(processLine(format(reader.nextLine())));
-            }
-            
+                e = processLine(format(reader.nextLine()));
+                if (!map.containsKey(e.getAddress().toLowerCase().trim())) {
+                    ArrayList<Entry> list = new ArrayList<Entry>();
+                    if (e.getAge() > 18) list.add(e);
+                    map.put(e.getAddress().toLowerCase(), list);
+                } else {
+                    if (e.getAge() > 18) {
+                        map.get(e.getAddress().toLowerCase()).add(e);
+                    }
+                }
+            } 
+            printResults(map);
         } catch (FileNotFoundException ex) {
             System.out.println(ex);
             System.exit(-1);
@@ -38,6 +49,19 @@ public class Main {
         return s;
     }
 
+    private static void printResults(HashMap<String, ArrayList<Entry>> map) {
+        for (String st : map.keySet()) {
+            if (map.get(st).size() > 0) {
+                System.out.printf("%s:\n",st);
+            }
+
+            for (Entry en : map.get(st)) {
+                if ((en.getAge() > 18)) {
+                    en.printToString();
+                }
+            }
+        }
+    }
 
 
 }
